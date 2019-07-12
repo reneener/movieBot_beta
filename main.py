@@ -9,8 +9,8 @@ from slack import WebClient
 from slackeventsapi import SlackEventAdapter
 from slack.web.classes.blocks import *
 from slack.web.classes.elements import *
-SLACK_TOKEN = "xoxb-678328595426-691902285110-GVUhMDIPm5zyrkxb07RkZjy5"
-SLACK_SIGNING_SECRET = "35ca02ef921085fc861fe48c5c672770"
+SLACK_TOKEN = "?"
+SLACK_SIGNING_SECRET = "?"
 app = Flask(__name__)
 slack_events_adaptor = SlackEventAdapter(SLACK_SIGNING_SECRET, "/listening", app)
 slack_web_client = WebClient(token=SLACK_TOKEN)
@@ -18,7 +18,7 @@ slack_web_client = WebClient(token=SLACK_TOKEN)
 # 영화배우 필모 함수
 def _moviestar_filmo(text):
     name = urllib.parse.quote(text)
-    ServiceKey = "9a5fa7cc90bd2b3ebb0feb3d6749ae1b"
+    ServiceKey = "?"
     url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key=9a5fa7cc90bd2b3ebb0feb3d6749ae1b&peopleNm=" + name + ""
     movieJson = urllib.request.urlopen(url)
     starData = json.loads(movieJson.read())
@@ -42,7 +42,7 @@ def _moviestar_filmo(text):
 #영화감독필모 함수
 def _director_filmo(text):
     name = urllib.parse.quote(text)
-    ServiceKey = "9a5fa7cc90bd2b3ebb0feb3d6749ae1b"
+    ServiceKey = "?"
     url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key=9a5fa7cc90bd2b3ebb0feb3d6749ae1b&peopleNm=" + name + ""
     movieJson = urllib.request.urlopen(url)
     starData = json.loads(movieJson.read())
@@ -73,7 +73,7 @@ def _boxoffice_ranking(text):
     time += str(datetime.today().month)
     time += str(datetime.today().day - 1)
     stime = urllib.parse.quote(time)
-    ServiceKey = "9a5fa7cc90bd2b3ebb0feb3d6749ae1b"
+    ServiceKey = "?"
     url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=9a5fa7cc90bd2b3ebb0feb3d6749ae1b&targetDt=" + stime + ""
     movieJson = urllib.request.urlopen(url)
     movieData = json.loads(movieJson.read())
