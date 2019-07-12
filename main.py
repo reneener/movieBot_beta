@@ -9,8 +9,8 @@ from slack import WebClient
 from slackeventsapi import SlackEventAdapter
 from slack.web.classes.blocks import *
 from slack.web.classes.elements import *
-SLACK_TOKEN = "?"
-SLACK_SIGNING_SECRET = "?"
+SLACK_TOKEN = "xoxb-678328595426-691902285110-YJGDK7VAcCdQvytUkTuUH8rn"
+SLACK_SIGNING_SECRET = "be811fd50804ee0229e873f334534991"
 app = Flask(__name__)
 slack_events_adaptor = SlackEventAdapter(SLACK_SIGNING_SECRET, "/listening", app)
 slack_web_client = WebClient(token=SLACK_TOKEN)
@@ -18,7 +18,7 @@ slack_web_client = WebClient(token=SLACK_TOKEN)
 # 영화배우 필모 함수
 def _moviestar_filmo(text):
     name = urllib.parse.quote(text)
-    ServiceKey = "?"
+    ServiceKey = "9a5fa7cc90bd2b3ebb0feb3d6749ae1b"
     url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key=9a5fa7cc90bd2b3ebb0feb3d6749ae1b&peopleNm=" + name + ""
     movieJson = urllib.request.urlopen(url)
     starData = json.loads(movieJson.read())
@@ -42,7 +42,7 @@ def _moviestar_filmo(text):
 #영화감독필모 함수
 def _director_filmo(text):
     name = urllib.parse.quote(text)
-    ServiceKey = "?"
+    ServiceKey = "9a5fa7cc90bd2b3ebb0feb3d6749ae1b"
     url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key=9a5fa7cc90bd2b3ebb0feb3d6749ae1b&peopleNm=" + name + ""
     movieJson = urllib.request.urlopen(url)
     starData = json.loads(movieJson.read())
@@ -73,7 +73,7 @@ def _boxoffice_ranking(text):
     time += str(datetime.today().month)
     time += str(datetime.today().day - 1)
     stime = urllib.parse.quote(time)
-    ServiceKey = "?"
+    ServiceKey = "9a5fa7cc90bd2b3ebb0feb3d6749ae1b"
     url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=9a5fa7cc90bd2b3ebb0feb3d6749ae1b&targetDt=" + stime + ""
     movieJson = urllib.request.urlopen(url)
     movieData = json.loads(movieJson.read())
@@ -182,9 +182,16 @@ def _movie_grade(text):
             emo = ':relaxed:'
         else:
             emo = ':heart_eyes:'
+
+        if len(sumarry) > 1:
+            text2 = ' *' + item['title'].replace('<b>', '').replace('</b>', '') + '    :   ' + item['userRating'] + \
+                    ' *' + '   ' + emo + '\n\n' + ' _' + sumarry[0] + ' _' + '\n' + sumarry[1] + "\n`#평점` `#MovieBot`"
+        else:
+            text2 = ' *' + item['title'].replace('<b>', '').replace('</b>', '') + '    :   ' + item['userRating'] + \
+                    ' *' + '   ' + emo + '\n\n' + ' _' + sumarry[0] + ' _' + "\n`#평점` `#MovieBot`"
+
         head_section = SectionBlock(
-            text=' *' + item['title'].replace('<b>', '').replace('</b>', '')  + '    :   ' + item['userRating']
-                 + ' *' + '   ' + emo + '\n\n' + ' _' + sumarry[0] + ' _' + '\n' + sumarry[1] + "\n`#평점` `#MovieBot`",
+            text=text2,
             accessory=first_item_image
         )
         list2.append(head_section)
